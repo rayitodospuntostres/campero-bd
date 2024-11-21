@@ -36,16 +36,15 @@ public class ProductController {
     public Product updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
         Product existingProduct = productService.findById(id);
         if (existingProduct != null) {
-            // Actualiza los campos del producto
             existingProduct.setName(updatedProduct.getName());
             existingProduct.setPrice(updatedProduct.getPrice());
             existingProduct.setStock(updatedProduct.getStock());
-            // Otros campos que necesites actualizar
             return productService.save(existingProduct);
         } else {
             throw new RuntimeException("Producto no encontrado con ID: " + id);
         }
     }
+
 
 
     @DeleteMapping("/delete/{id}")
