@@ -1,0 +1,219 @@
+name: Build and Push Docker Images - MICROSERVICES
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'soa-eureka-server/**'
+      - 'soa-gateway-microservice/**'
+      - 'soa-order-detail-microservice/**'
+      - 'soa-order-microservice/**'
+      - 'soa-payment-microservice/**'
+      - 'soa-product-microservice/**'
+      - 'soa-user-microservice/**'
+      - 'soa-auth-microservice/**'
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - 'soa-eureka-server/**'  
+      - 'soa-gateway-microservice/**'
+      - 'soa-order-detail-microservice/**'
+      - 'soa-order-microservice/**'
+      - 'soa-payment-microservice/**'
+      - 'soa-product-microservice/**'
+      - 'soa-user-microservice/**'
+      - 'soa-auth-microservice/**'      
+      
+jobs:
+  build-eureka-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Clean Docker cache
+        run: docker builder prune -f
+        
+      - name: Build and Push Eureka Docker Image
+        run: |
+          cd soa-eureka-server
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-eureka-server:latest -t teuzed/soa-eureka-server:${SHORT_SHA} .
+          docker push teuzed/soa-eureka-server:${SHORT_SHA}
+          docker push teuzed/soa-eureka-server:latest
+          
+
+  build-gateway-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Clean Docker cache
+        run: docker builder prune -f
+        
+      - name: Build and Push Gateway Docker Image
+        run: |
+          cd soa-gateway-microservice
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-gateway-microservice:latest -t teuzed/soa-gateway-microservice:${SHORT_SHA} .
+          docker push teuzed/soa-gateway-microservice:${SHORT_SHA}
+          docker push teuzed/soa-gateway-microservice:latest
+
+  build-order-detail-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Clean Docker cache
+        run: docker builder prune -f  
+
+      - name: Build and Push Gateway Docker Image
+        run: |
+          cd soa-order_detail-microservice
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-order-detail-microservice:latest -t teuzed/soa-order-detail-microservice:${SHORT_SHA} .
+          docker push teuzed/soa-order-detail-microservice:${SHORT_SHA}
+          docker push teuzed/soa-order-detail-microservice:latest
+
+
+  build-order-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Clean Docker cache
+        run: docker builder prune -f          
+
+      - name: Build and Push Gateway Docker Image
+        run: |
+          cd soa-order-microservice
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-order-microservice:latest -t teuzed/soa-order-microservice:${SHORT_SHA} .
+          docker push teuzed/soa-order-microservice:${SHORT_SHA}   
+          docker push teuzed/soa-order-microservice:latest
+       
+
+
+  build-payment-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Clean Docker cache
+        run: docker builder prune -f
+        
+      - name: Build and Push Gateway Docker Image
+        run: |
+          cd soa-payment-microservice
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-payment-microservice:latest -t teuzed/soa-payment-microservice:${SHORT_SHA} .
+          docker push teuzed/soa-payment-microservice:${SHORT_SHA} 
+          docker push teuzed/soa-payment-microservice:latest
+  
+
+  build-product-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Clean Docker cache
+        run: docker builder prune -f
+        
+      - name: Build and Push Product Docker Image
+        run: |
+          cd soa-product-microservice
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-product-microservice:latest -t teuzed/soa-product-microservice:${SHORT_SHA} .
+          docker push teuzed/soa-product-microservice:${SHORT_SHA}
+          docker push teuzed/soa-product-microservice:latest
+
+
+  build-user-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Clean Docker cache
+        run: docker builder prune -f
+        
+      - name: Build and Push User Docker Image
+        run: |
+          cd soa-user-microservice
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-user-microservice:latest -t teuzed/soa-user-microservice:${SHORT_SHA} .
+          docker push teuzed/soa-user-microservice:${SHORT_SHA}
+          docker push teuzed/soa-user-microservice:latest
+  
+          
+  build-auth-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Clean Docker cache
+        run: docker builder prune -f
+        
+      - name: Build and Push Eureka Docker Image
+        run: |
+          cd soa-auth-microservice
+          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t teuzed/soa-auth-microservice:latest -t teuzed/soa-auth-microservice:${SHORT_SHA} .
+          docker push teuzed/soa-auth-microservice:${SHORT_SHA}
+          docker push teuzed/soa-auth-microservice:latest
+

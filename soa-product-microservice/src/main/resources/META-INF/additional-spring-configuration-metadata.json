@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "config.url-config.api_gateway",
+      "type": "java.lang.String",
+      "description": "Description for config.url-config.api_gateway."
+    },
+    {
+      "name": "app.version",
+      "type": "java.lang.String",
+      "description": "Description for app.version."
+    }
+  ] }

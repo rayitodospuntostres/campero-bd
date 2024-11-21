@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  soa-product-microservice:
+    image: teuzed/soa-product-microservice:latest
+    container_name: soa-product-microservice
+    ports:
+      - "8081:8081" 
+    networks:
+      - soa-network
+    environment:
+      - SERVICE_SOA=soa-product-microservice
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ep-cool-sky-a5jqq0tn.us-east-2.aws.neon.tech/soa-database?sslmode=require
+      - SPRING_DATASOURCE_USERNAME=soa-database_owner
+      - SPRING_DATASOURCE_PASSWORD=h7rgP1DuSCRc
+
+networks:
+  soa-network:
+    driver: bridge
